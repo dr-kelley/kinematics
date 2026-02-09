@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinematics Module - Physics Simulations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .simulation-card {
+            transition: all 0.3s ease;
+        }
+        .simulation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Breadcrumb Navigation -->
+        <div class="mb-6">
+            <a href="../" class="text-indigo-600 hover:text-indigo-800 font-medium">← Back to All Modules</a>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-indigo-900 mb-4">
+                Kinematics Module
+            </h1>
+            <p class="text-xl text-gray-700 max-w-2xl mx-auto">
+                Explore the fundamentals of motion through interactive visualizations
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h2 class="text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-3">
+                Available Simulations
+            </h2>
+            
+            <p class="text-gray-700 mb-8 leading-relaxed">
+                This collection of simulations covers fundamental concepts in kinematics—the study of motion. 
+                Each simulation provides real-time visualization of position, velocity, and acceleration, 
+                allowing you to develop intuition about how these quantities relate to one another.
+            </p>
+
+            <!-- Simulation Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- 1D Kinematics Card -->
+                <a href="1d-kinematics.html" class="simulation-card block bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border-2 border-indigo-200 hover:border-indigo-400">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-indigo-900">1D Kinematics</h3>
+                        <span class="bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Available</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        Explore one-dimensional motion with various pre-programmed motion profiles including 
+                        oscillations, constant acceleration, and more complex behaviors.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-indigo-700 font-medium">Position</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-green-700 font-medium">Velocity</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-purple-700 font-medium">Acceleration</span>
+                    </div>
+                </a>
+
+                <!-- 2D Kinematics Card -->
+                <a href="2d-kinematics.html" class="simulation-card block bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border-2 border-purple-200 hover:border-purple-400">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-purple-900">2D Kinematics</h3>
+                        <span class="bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Available</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        Visualize motion in two dimensions with vector decomposition. Explore how x and y 
+                        components evolve independently over time with projectiles, orbits, and more.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-purple-700 font-medium">2D Vectors</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-pink-700 font-medium">Components</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-indigo-700 font-medium">Trajectories</span>
+                    </div>
+                </a>
+
+                <!-- Projectile Motion Card -->
+                <a href="projectile-motion.html" class="simulation-card block bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border-2 border-green-200 hover:border-green-400">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-green-900">Projectile Motion</h3>
+                        <span class="bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Available</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        Investigate parabolic trajectories under constant gravitational acceleration. 
+                        Adjust launch angle, initial velocity, and include air resistance to see realistic motion.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-green-700 font-medium">Parabolas</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-emerald-700 font-medium">Range</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-teal-700 font-medium">Air Resistance</span>
+                    </div>
+                </a>
+
+                <!-- Relative Motion Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Relative Motion</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Calculate and visualize motion from different reference frames. See how velocity 
+                        and position depend on the observer's frame of reference.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Reference Frames</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Relative Velocity</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Galilean Transform</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Objectives Section -->
+            <div class="mt-8 p-6 bg-indigo-50 rounded-lg">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4">Learning Objectives</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-md font-semibold text-gray-800 mb-2">Conceptual Understanding</h4>
+                        <ul class="space-y-2 text-gray-700 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Understand the relationship between position, velocity, and acceleration</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Recognize motion patterns in graphs and physical space</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Visualize vector decomposition in 2D motion</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Understand the effects of air resistance on projectile motion</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-md font-semibold text-gray-800 mb-2">Mathematical Skills</h4>
+                        <ul class="space-y-2 text-gray-700 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Interpret kinematic graphs and extract quantitative information</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Analyze vector components in two-dimensional motion</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Understand independence of x and y motion in 2D kinematics</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Apply numerical methods to solve complex motion problems</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-600">
+            <p class="text-sm">
+                Interactive Physics Simulations for Introductory Physics
+            </p>
+        </div>
+    </div>
+</body>
+</html>

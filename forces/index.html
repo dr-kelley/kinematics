@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forces Module - Physics Simulations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .simulation-card {
+            transition: all 0.3s ease;
+        }
+        .simulation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Breadcrumb Navigation -->
+        <div class="mb-6">
+            <a href="../" class="text-indigo-600 hover:text-indigo-800 font-medium">← Back to All Modules</a>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-indigo-900 mb-4">
+                Forces Module
+            </h1>
+            <p class="text-xl text-gray-700 max-w-2xl mx-auto">
+                Explore Newton's laws and the fundamental principles of forces
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h2 class="text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-3">
+                Available Simulations
+            </h2>
+            
+            <p class="text-gray-700 mb-8 leading-relaxed">
+                Explore the fundamental principles of forces and Newton's laws of motion. 
+                These simulations help you visualize force vectors, understand equilibrium, and 
+                see how forces create changes in motion.
+            </p>
+
+            <!-- Simulation Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Newton's Laws Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Newton's Laws</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Investigate the three laws of motion with interactive scenarios. Apply forces to objects 
+                        and observe how mass affects acceleration according to F = ma.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Force Vectors</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">F = ma</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Free Body Diagrams</span>
+                    </div>
+                </div>
+
+                <!-- Newton's Third Law Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Newton's Third Law</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Explore action-reaction force pairs in various scenarios. Visualize how forces always 
+                        come in equal and opposite pairs between interacting objects.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Action-Reaction</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Force Pairs</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Interactions</span>
+                    </div>
+                </div>
+
+                <!-- Friction Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Friction</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Investigate static and kinetic friction on inclined planes and horizontal surfaces. 
+                        Adjust coefficients of friction and normal forces to see their effects.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Static Friction</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Kinetic Friction</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Inclined Planes</span>
+                    </div>
+                </div>
+
+                <!-- Spring Force Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Spring Force (Hooke's Law)</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Explore elastic forces with springs and Hooke's Law (F = -kx). Vary spring constants 
+                        and observe oscillations, equilibrium positions, and energy transformations.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Hooke's Law</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Spring Constant</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Oscillations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Objectives Section -->
+            <div class="mt-8 p-6 bg-indigo-50 rounded-lg">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4">Learning Objectives</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-md font-semibold text-gray-800 mb-2">Conceptual Understanding</h4>
+                        <ul class="space-y-2 text-gray-700 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Understand Newton's three laws of motion and their applications</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Recognize action-reaction force pairs in physical systems</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Distinguish between static and kinetic friction</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Understand elastic forces and energy storage in springs</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-md font-semibold text-gray-800 mb-2">Mathematical Skills</h4>
+                        <ul class="space-y-2 text-gray-700 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Draw and analyze free body diagrams</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Apply Newton's second law to calculate acceleration from forces</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Calculate friction forces using coefficients and normal forces</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Apply Hooke's Law to spring systems</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-600">
+            <p class="text-sm">
+                Interactive Physics Simulations for Introductory Physics
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -15,320 +15,163 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        .simulation-card {
+        .module-card {
             transition: all 0.3s ease;
         }
-        .simulation-card:hover {
+        .module-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
-        }
-        .tab {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-        }
-        .tab:hover {
-            background-color: rgba(99, 102, 241, 0.05);
-        }
-        .tab.active {
-            border-bottom-color: #4f46e5;
-            background-color: white;
-            color: #4f46e5;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
         }
     </style>
 </head>
 <body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
     <div class="container mx-auto px-4 py-12 max-w-6xl">
         <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-5xl font-bold text-indigo-900 mb-4">
+        <div class="text-center mb-12">
+            <h1 class="text-6xl font-bold text-indigo-900 mb-4">
                 Interactive Physics Simulations
             </h1>
-            <p class="text-xl text-gray-700 max-w-2xl mx-auto">
+            <p class="text-2xl text-gray-700 max-w-3xl mx-auto mb-2">
                 Explore fundamental physics concepts through interactive visualizations
             </p>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                PHYS1151 - Introductory Physics
+            </p>
         </div>
 
-        <!-- Tabs -->
-        <div class="bg-white rounded-t-2xl shadow-xl">
-            <div class="flex border-b border-gray-200">
-                <div class="tab active px-8 py-4 text-lg font-semibold" onclick="switchTab('kinematics')">
-                    Kinematics
-                </div>
-                <div class="tab px-8 py-4 text-lg font-semibold text-gray-600" onclick="switchTab('forces')">
-                    Forces
-                </div>
-            </div>
-        </div>
-
-        <!-- Kinematics Tab Content -->
-        <div id="kinematics-content" class="tab-content active bg-white rounded-b-2xl shadow-xl p-8 mb-8">
-            <h2 class="text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-3">
-                Kinematics Module
+        <!-- Main Content -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h2 class="text-3xl font-semibold text-indigo-800 mb-6 text-center">
+                Course Modules
             </h2>
             
-            <p class="text-gray-700 mb-8 leading-relaxed">
-                This collection of simulations covers fundamental concepts in kinematics—the study of motion. 
-                Each simulation provides real-time visualization of position, velocity, and acceleration, 
-                allowing you to develop intuition about how these quantities relate to one another.
+            <p class="text-gray-700 mb-10 leading-relaxed text-center max-w-3xl mx-auto">
+                Select a module below to explore interactive simulations covering key topics in introductory physics. 
+                Each module contains multiple simulations designed to build conceptual understanding and problem-solving skills.
             </p>
 
-            <!-- Simulation Cards Grid -->
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- 1D Kinematics Card -->
-                <a href="1d-kinematics.html" class="simulation-card block bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border-2 border-indigo-200 hover:border-indigo-400">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-indigo-900">1D Kinematics</h3>
-                        <span class="bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Available</span>
+            <!-- Module Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Kinematics Module Card -->
+                <a href="kinematics/" class="module-card block bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-8 border-2 border-indigo-300 hover:border-indigo-500 shadow-lg">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-indigo-900">Kinematics</h3>
+                        <span class="bg-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-full">3 Simulations</span>
                     </div>
-                    <p class="text-gray-700 mb-4">
-                        Explore one-dimensional motion with various pre-programmed motion profiles including 
-                        oscillations, constant acceleration, and more complex behaviors.
+                    <p class="text-gray-700 mb-6 text-base leading-relaxed">
+                        Study motion in one and two dimensions. Explore position, velocity, acceleration relationships 
+                        through interactive visualizations and real-time graphing.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-indigo-700 font-medium">Position</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-green-700 font-medium">Velocity</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-purple-700 font-medium">Acceleration</span>
+                    <div class="border-t border-indigo-200 pt-4">
+                        <h4 class="text-sm font-semibold text-indigo-800 mb-2">Topics Covered:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-indigo-700 font-medium border border-indigo-200">1D Motion</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-indigo-700 font-medium border border-indigo-200">2D Vectors</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-indigo-700 font-medium border border-indigo-200">Projectiles</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-indigo-700 font-medium border border-indigo-200">Air Resistance</span>
+                        </div>
                     </div>
                 </a>
 
-                <!-- 2D Kinematics Card -->
-                <a href="2d-kinematics.html" class="simulation-card block bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border-2 border-purple-200 hover:border-purple-400">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-purple-900">2D Kinematics</h3>
-                        <span class="bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Available</span>
+                <!-- Forces Module Card -->
+                <div class="module-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-8 border-2 border-gray-300 shadow-lg opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-700">Forces</h3>
+                        <span class="bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded-full">Coming Soon</span>
                     </div>
-                    <p class="text-gray-700 mb-4">
-                        Visualize motion in two dimensions with vector decomposition. Explore how x and y 
-                        components evolve independently over time with projectiles, orbits, and more.
+                    <p class="text-gray-600 mb-6 text-base leading-relaxed">
+                        Investigate Newton's laws of motion, friction, and elastic forces. Visualize force vectors, 
+                        analyze free body diagrams, and explore equilibrium conditions.
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-purple-700 font-medium">2D Vectors</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-pink-700 font-medium">Components</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-indigo-700 font-medium">Trajectories</span>
-                    </div>
-                </a>
-
-                <!-- Projectile Motion Card -->
-                <a href="projectile-motion.html" class="simulation-card block bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border-2 border-green-200 hover:border-green-400">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-green-900">Projectile Motion</h3>
-                        <span class="bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Available</span>
-                    </div>
-                    <p class="text-gray-700 mb-4">
-                        Investigate parabolic trajectories under constant gravitational acceleration. 
-                        Adjust launch angle, initial velocity, and include air resistance to see realistic motion.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-green-700 font-medium">Parabolas</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-emerald-700 font-medium">Range</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-teal-700 font-medium">Air Resistance</span>
-                    </div>
-                </a>
-
-                <!-- Relative Motion Card -->
-                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-gray-700">Relative Motion</h3>
-                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <p class="text-gray-600 mb-4">
-                        Calculate and visualize motion from different reference frames. See how velocity 
-                        and position depend on the observer's frame of reference.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Reference Frames</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Relative Velocity</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Galilean Transform</span>
+                    <div class="border-t border-gray-300 pt-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">Topics Covered:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Newton's Laws</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Friction</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Springs</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Action-Reaction</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Learning Objectives Section -->
-            <div class="mt-8 p-6 bg-indigo-50 rounded-lg">
-                <h3 class="text-xl font-semibold text-indigo-800 mb-4">Learning Objectives</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-md font-semibold text-gray-800 mb-2">Conceptual Understanding</h4>
-                        <ul class="space-y-2 text-gray-700 text-sm">
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Understand the relationship between position, velocity, and acceleration</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Recognize motion patterns in graphs and physical space</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Visualize vector decomposition in 2D motion</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Understand the effects of air resistance on projectile motion</span>
-                            </li>
-                        </ul>
+                <!-- Energy Module Card - Placeholder -->
+                <div class="module-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-8 border-2 border-gray-300 shadow-lg opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-700">Energy</h3>
+                        <span class="bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded-full">Planned</span>
                     </div>
-                    <div>
-                        <h4 class="text-md font-semibold text-gray-800 mb-2">Mathematical Skills</h4>
-                        <ul class="space-y-2 text-gray-700 text-sm">
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Interpret kinematic graphs and extract quantitative information</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Analyze vector components in two-dimensional motion</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Understand independence of x and y motion in 2D kinematics</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Apply numerical methods to solve complex motion problems</span>
-                            </li>
-                        </ul>
+                    <p class="text-gray-600 mb-6 text-base leading-relaxed">
+                        Explore work, kinetic energy, potential energy, and conservation principles. 
+                        Visualize energy transformations in various physical systems.
+                    </p>
+                    <div class="border-t border-gray-300 pt-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">Topics Covered:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Work</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Conservation</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Power</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rotations Module Card - Placeholder -->
+                <div class="module-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-8 border-2 border-gray-300 shadow-lg opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-gray-700">Rotational Motion</h3>
+                        <span class="bg-gray-400 text-white text-sm font-semibold px-4 py-2 rounded-full">Planned</span>
+                    </div>
+                    <p class="text-gray-600 mb-6 text-base leading-relaxed">
+                        Study rotational kinematics and dynamics. Explore torque, angular momentum, 
+                        and moment of inertia through interactive demonstrations.
+                    </p>
+                    <div class="border-t border-gray-300 pt-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">Topics Covered:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Torque</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Angular Momentum</span>
+                            <span class="text-xs bg-white px-3 py-1 rounded-full text-gray-600 font-medium border border-gray-300">Inertia</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Forces Tab Content -->
-        <div id="forces-content" class="tab-content bg-white rounded-b-2xl shadow-xl p-8 mb-8">
-            <h2 class="text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-3">
-                Forces Module
-            </h2>
-            
-            <p class="text-gray-700 mb-8 leading-relaxed">
-                Explore the fundamental principles of forces and Newton's laws of motion. 
-                These simulations help you visualize force vectors, understand equilibrium, and 
-                see how forces create changes in motion.
-            </p>
-
-            <!-- Simulation Cards Grid -->
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Newton's Laws Card -->
-                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-gray-700">Newton's Laws</h3>
-                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+        <!-- Course Information -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h2 class="text-2xl font-semibold text-indigo-800 mb-6 text-center">About These Simulations</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        Investigate the three laws of motion with interactive scenarios. Apply forces to objects 
-                        and observe how mass affects acceleration according to F = ma.
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Interactive Learning</h3>
+                    <p class="text-gray-600 text-sm">
+                        Manipulate parameters in real-time to see immediate effects on motion and forces
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Force Vectors</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">F = ma</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Free Body Diagrams</span>
-                    </div>
                 </div>
-
-                <!-- Newton's Third Law Card -->
-                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-gray-700">Newton's Third Law</h3>
-                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                        </svg>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        Explore action-reaction force pairs in various scenarios. Visualize how forces always 
-                        come in equal and opposite pairs between interacting objects.
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Visual Feedback</h3>
+                    <p class="text-gray-600 text-sm">
+                        Real-time graphs and animations help build intuition for abstract concepts
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Action-Reaction</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Force Pairs</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Interactions</span>
-                    </div>
                 </div>
-
-                <!-- Friction Card -->
-                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-gray-700">Friction</h3>
-                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                <div class="text-center">
+                    <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        Investigate static and kinetic friction on inclined planes and horizontal surfaces. 
-                        Adjust coefficients of friction and normal forces to see their effects.
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Self-Paced</h3>
+                    <p class="text-gray-600 text-sm">
+                        Explore at your own pace with adjustable parameters and multiple scenarios
                     </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Static Friction</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Kinetic Friction</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Inclined Planes</span>
-                    </div>
-                </div>
-
-                <!-- Spring Force Card -->
-                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
-                    <div class="flex items-start justify-between mb-3">
-                        <h3 class="text-xl font-bold text-gray-700">Spring Force (Hooke's Law)</h3>
-                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <p class="text-gray-600 mb-4">
-                        Explore elastic forces with springs and Hooke's Law (F = -kx). Vary spring constants 
-                        and observe oscillations, equilibrium positions, and energy transformations.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Hooke's Law</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Spring Constant</span>
-                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Oscillations</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Learning Objectives Section -->
-            <div class="mt-8 p-6 bg-indigo-50 rounded-lg">
-                <h3 class="text-xl font-semibold text-indigo-800 mb-4">Learning Objectives</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-md font-semibold text-gray-800 mb-2">Conceptual Understanding</h4>
-                        <ul class="space-y-2 text-gray-700 text-sm">
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Understand Newton's three laws of motion and their applications</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Recognize action-reaction force pairs in physical systems</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Distinguish between static and kinetic friction</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Understand elastic forces and energy storage in springs</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-md font-semibold text-gray-800 mb-2">Mathematical Skills</h4>
-                        <ul class="space-y-2 text-gray-700 text-sm">
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Draw and analyze free body diagrams</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Apply Newton's second law to calculate acceleration from forces</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Calculate friction forces using coefficients and normal forces</span>
-                            </li>
-                            <li class="flex items-start">
-                                <span class="text-indigo-600 mr-2">•</span>
-                                <span>Apply Hooke's Law to spring systems</span>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
@@ -336,33 +179,9 @@
         <!-- Footer -->
         <div class="text-center mt-8 text-gray-600">
             <p class="text-sm">
-                Interactive Physics Simulations for Introductory Physics
+                Interactive Physics Simulations for PHYS1151 - Introductory Physics
             </p>
         </div>
     </div>
-
-    <script>
-        function switchTab(tabName) {
-            // Hide all tab contents
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Remove active class from all tabs
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                tab.classList.add('text-gray-600');
-            });
-
-            // Show selected tab content
-            document.getElementById(tabName + '-content').classList.add('active');
-
-            // Add active class to selected tab
-            event.target.classList.add('active');
-            event.target.classList.remove('text-gray-600');
-        }
-    </script>
 </body>
 </html>
