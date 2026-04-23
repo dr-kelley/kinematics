@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotational Motion Module - Physics Simulations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .simulation-card {
+            transition: all 0.3s ease;
+        }
+        .simulation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Breadcrumb Navigation -->
+        <div class="mb-6">
+            <a href="../" class="text-indigo-600 hover:text-indigo-800 font-medium">← Back to All Modules</a>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-indigo-900 mb-4">
+                Rotational Motion Module
+            </h1>
+            <p class="text-xl text-gray-700 max-w-2xl mx-auto">
+                Explore torque, angular momentum, and the rotational analogs of Newton's laws
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h2 class="text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-3">
+                Available Simulations
+            </h2>
+
+            <p class="text-gray-700 mb-8 leading-relaxed">
+                Rotational motion governs everything from spinning tops to orbiting planets. These simulations
+                build on Newton's laws to explore their rotational equivalents—torque, angular acceleration,
+                and angular momentum—and reveal the deep symmetry between linear and rotational dynamics.
+            </p>
+
+            <!-- Simulation Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Torque and Angular Acceleration Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Torque and Angular Acceleration</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Apply forces at various points on a rigid body and observe the resulting torques and
+                        angular accelerations. Explore the rotational analog of Newton's second law, τ = Iα.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Torque</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Lever Arm</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">τ = Iα</span>
+                    </div>
+                </div>
+
+                <!-- Moment of Inertia Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Moment of Inertia</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Investigate how the distribution of mass affects rotational inertia. Compare
+                        different object shapes and see how repositioning mass changes resistance to rotation.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Mass Distribution</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Parallel Axis Theorem</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Rigid Bodies</span>
+                    </div>
+                </div>
+
+                <!-- Angular Momentum Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Angular Momentum</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Explore conservation of angular momentum through collisions and interactions of
+                        rotating objects. See how changing moment of inertia affects angular velocity.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Conservation of L</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Rotational Collisions</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Spin-Up / Spin-Down</span>
+                    </div>
+                </div>
+
+                <!-- Rolling Motion Card -->
+                <div class="simulation-card block bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-6 border-2 border-gray-300 opacity-60 cursor-not-allowed">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-xl font-bold text-gray-700">Rolling Motion</h3>
+                        <span class="bg-gray-400 text-white text-xs font-semibold px-3 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Visualize rolling without slipping and the interplay between translational and
+                        rotational kinetic energy. Compare how objects of different shapes race down inclines.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Rolling Without Slipping</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Rotational KE</span>
+                        <span class="text-xs bg-white px-2 py-1 rounded text-gray-600 font-medium">Inclined Planes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Objectives Section -->
+            <div class="mt-8 p-6 bg-indigo-50 rounded-lg">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4">Learning Objectives</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-md font-semibold text-gray-800 mb-2">Conceptual Understanding</h4>
+                        <ul class="space-y-2 text-gray-700 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Recognize the rotational analogs of displacement, velocity, and acceleration</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Understand how torque produces angular acceleration</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Explain why mass distribution affects moment of inertia</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Understand conservation of angular momentum and its consequences</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-md font-semibold text-gray-800 mb-2">Mathematical Skills</h4>
+                        <ul class="space-y-2 text-gray-700 text-sm">
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Calculate torque from force magnitude, lever arm, and angle</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Apply τ = Iα to find angular acceleration of rigid bodies</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Use conservation of angular momentum in collision problems</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-600 mr-2">•</span>
+                                <span>Include rotational kinetic energy in energy conservation equations</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-600">
+            <p class="text-sm">
+                Interactive Physics Simulations for Introductory Physics
+            </p>
+        </div>
+    </div>
+</body>
+</html>

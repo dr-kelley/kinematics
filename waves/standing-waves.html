@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standing Waves on a String</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+        body { margin:0; padding:0; font-family:'DM Sans',sans-serif; background:#0f1117; color:#e2e8f0; }
+        canvas { display:block; }
+        input[type="range"] {
+            -webkit-appearance:none; appearance:none;
+            width:100%; height:4px; background:#374151; border-radius:2px; outline:none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance:none; width:14px; height:14px;
+            border-radius:50%; background:#60a5fa; cursor:pointer;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width:14px; height:14px; border-radius:50%;
+            background:#60a5fa; cursor:pointer; border:none;
+        }
+        .panel-label {
+            font-family:'Space Mono',monospace; font-size:11px;
+            letter-spacing:0.14em; text-transform:uppercase; color:#9ca3af;
+        }
+        .value-display { font-family:'Space Mono',monospace; font-size:12px; color:#93c5fd; }
+        .ctrl-label    { font-size:13px; color:#d1d5db; }
+        .sub-label     { font-size:11px; color:#6b7280; font-family:'Space Mono',monospace; }
+        .btn {
+            font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.06em;
+            padding:9px 22px; border:none; border-radius:5px; cursor:pointer;
+            transition:all 0.15s ease; display:flex; align-items:center; gap:7px;
+        }
+        .btn-primary   { background:#1d4ed8; color:#eff6ff; }
+        .btn-primary:hover { background:#2563eb; }
+        .btn-active    { background:#166534; color:#dcfce7; }
+        .btn-active:hover  { background:#15803d; }
+        .btn-secondary { background:#374151; color:#d1d5db; }
+        .btn-secondary:hover { background:#4b5563; color:#f3f4f6; }
+        .btn-mode {
+            background:#1e2030; color:#9ca3af; border:1px solid #374151;
+            font-family:'Space Mono',monospace; font-size:11px;
+            padding:7px 14px; border-radius:4px; cursor:pointer;
+            transition:all 0.15s; width:100%; text-align:left;
+        }
+        .btn-mode-active { background:#1d3a6b; color:#93c5fd; border-color:#3b82f6; }
+        .card { background:#1c2030; border-radius:8px; padding:14px 16px; }
+        .resonance-bar-bg { height:8px; background:#1e2533; border-radius:4px; overflow:hidden; }
+        .resonance-bar-fill { height:100%; border-radius:4px; transition:width 0.1s, background 0.3s; }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
+
+    const Play    = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>;
+    const Pause   = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>;
+    const ResetIcon = ({s=18}) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>;
+
+    function Toggle({ value, onChange, label }) {
+        return (
+            <label style={{display:'flex',alignItems:'center',gap:10,cursor:'pointer'}}>
+                <div onClick={()=>onChange(!value)} style={{
+                    width:36,height:20,borderRadius:10,position:'relative',
+                    cursor:'pointer',transition:'background 0.2s',flexShrink:0,
+                    background: value ? '#1d4ed8' : '#374151'
+                }}>
+                    <div style={{
+                        position:'absolute',top:2,left:value?18:2,
+                        width:16,height:16,borderRadius:'50%',transition:'left 0.2s',
+                        background: value ? '#93c5fd' : '#6b7280'
+                    }}/>
+                </div>
+                <span className="ctrl-label" style={{userSelect:'none'}}>{label}</span>
+            </label>
+        );
+    }
+
+    function Slider({ label, value, display, min, max, step, onChange, sub }) {
+        return (
+            <div>
+                <div style={{display:'flex',justifyContent:'space-between',marginBottom:5}}>
+                    <span className="ctrl-label">{label}</span>
+                    <span className="value-display">{display}</span>
+                </div>
+                <input type="range" min={min} max={max} step={step} value={value}
+                    onChange={e=>onChange(+e.target.value)}/>
+                {sub && <div style={{marginTop:3}}><span className="sub-label">{sub}</span></div>}
+            </div>
+        );
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    function StandingWaves() {
+        const [tension,      setTension]      = useState(10);
+        const [linDensity,   setLinDensity]   = useState(0.01);
+        const [frequency,    setFrequency]    = useState(5);
+        const [amplitude,    setAmplitude]    = useState(40);
+        const [timeScale,    setTimeScale]    = useState(0.3);   // animation speed multiplier
+        const [boundary,     setBoundary]     = useState('fixed-fixed');
+        const [showNodes,      setShowNodes]      = useState(true);
+        const [showEnvelope,   setShowEnvelope]   = useState(true);
+        const [showAntinodes,  setShowAntinodes]  = useState(false);
+        const [isPlaying,      setIsPlaying]      = useState(false);
+
+        const canvasRef = useRef(null);
+        const stateRef  = useRef({
+            t:0, lastTimestamp:null, isPlaying:false,
+            tension:10, linDensity:0.01, frequency:5, amplitude:40, timeScale:0.3,
+            boundary:'fixed-fixed', showNodes:true, showEnvelope:true, showAntinodes:false,
+        });
+        const rafRef = useRef(null);
+
+        // canvas geometry
+        const CW = 700;
+        const CH = 300;
+        const PAD_X  = 55;
+        const STRING_Y = CH / 2;
+        const STRING_L = CW - 2*PAD_X;
+        const L_METRES = 1.0;
+
+        // sync stateRef
+        useEffect(()=>{ stateRef.current.tension      = tension;      },[tension]);
+        useEffect(()=>{ stateRef.current.linDensity   = linDensity;   },[linDensity]);
+        useEffect(()=>{ stateRef.current.frequency    = frequency;    },[frequency]);
+        useEffect(()=>{ stateRef.current.amplitude    = amplitude;    },[amplitude]);
+        useEffect(()=>{ stateRef.current.timeScale    = timeScale;    },[timeScale]);
+        useEffect(()=>{ stateRef.current.boundary     = boundary;     },[boundary]);
+        useEffect(()=>{ stateRef.current.showNodes    = showNodes;    },[showNodes]);
+        useEffect(()=>{ stateRef.current.showEnvelope = showEnvelope; },[showEnvelope]);
+        useEffect(()=>{ stateRef.current.showAntinodes= showAntinodes;},[showAntinodes]);
+        useEffect(()=>{ stateRef.current.isPlaying    = isPlaying;    },[isPlaying]);
+
+        // ── physics helpers ────────────────────────────────────────────────────
+        function getWaveSpeed(T, mu) { return Math.sqrt(T / mu); }
+
+        function getResonantFreqs(T, mu, bc, N=6) {
+            const v = getWaveSpeed(T, mu);
+            const freqs = [];
+            if (bc === 'fixed-open') {
+                for (let n=1; n<=N; n++) freqs.push({ n:2*n-1, f:(2*n-1)*v/(4*L_METRES) });
+            } else {
+                for (let n=1; n<=N; n++) freqs.push({ n, f:n*v/(2*L_METRES) });
+            }
+            return freqs;
+        }
+
+        function resonanceProximity(freq, resonantFreqs) {
+            let best=null, bestDist=Infinity;
+            for (const r of resonantFreqs) {
+                const d = Math.abs(freq - r.f);
+                if (d < bestDist) { bestDist=d; best=r; }
+            }
+            if (!best) return { harmonic:null, proximity:0, delta:0 };
+            const halfWidth = best.f * 0.15;
+            const proximity = Math.max(0, 1 - bestDist/halfWidth);
+            return { harmonic:best, proximity, delta:freq-best.f };
+        }
+
+        // ── draw ──────────────────────────────────────────────────────────────
+        function draw(ctx, t) {
+            const s  = stateRef.current;
+            const T  = s.tension, mu=s.linDensity;
+            const f  = s.frequency, A=s.amplitude;
+            const bc = s.boundary;
+
+            ctx.clearRect(0,0,CW,CH);
+
+            // grid
+            ctx.strokeStyle='#131924'; ctx.lineWidth=1;
+            for (let x=0;x<CW;x+=40){ ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,CH);ctx.stroke(); }
+            for (let y=0;y<CH;y+=40){ ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(CW,y);ctx.stroke(); }
+
+            // equilibrium line
+            ctx.save();
+            ctx.strokeStyle='rgba(96,165,250,0.15)'; ctx.lineWidth=1; ctx.setLineDash([6,4]);
+            ctx.beginPath(); ctx.moveTo(PAD_X,STRING_Y); ctx.lineTo(PAD_X+STRING_L,STRING_Y); ctx.stroke();
+            ctx.restore();
+
+            const v     = getWaveSpeed(T, mu);
+            const omega = 2*Math.PI*f;
+            const k     = omega/v;
+
+            const muMin=0.001, muMax=0.05;
+            const thickBase = 1.5 + 4.5*Math.sqrt((mu-muMin)/(muMax-muMin));
+
+            const resonantFreqs = getResonantFreqs(T, mu, bc, 8);
+            const { proximity, harmonic } = resonanceProximity(f, resonantFreqs);
+            const effA = A*(0.15 + 0.85*proximity);
+
+            // string points
+            const STEPS = 400;
+            const pts = [];
+            for (let i=0; i<=STEPS; i++) {
+                const frac=i/STEPS, xPx=PAD_X+frac*STRING_L, xM=frac*L_METRES;
+                let y;
+                if (bc==='open-open')  y = STRING_Y + effA*Math.cos(k*xM)*Math.cos(omega*t);
+                else                   y = STRING_Y + effA*Math.sin(k*xM)*Math.cos(omega*t);
+                pts.push({x:xPx, y});
+            }
+
+            // envelope
+            if (s.showEnvelope && proximity > 0.05) {
+                ctx.save();
+                ctx.strokeStyle=`rgba(251,191,36,${0.22*proximity})`; ctx.lineWidth=1.5; ctx.setLineDash([4,3]);
+                ctx.beginPath();
+                for (let i=0;i<=STEPS;i++) {
+                    const frac=i/STEPS, xPx=PAD_X+frac*STRING_L, xM=frac*L_METRES;
+                    const env = STRING_Y - effA*(bc==='open-open' ? Math.abs(Math.cos(k*xM)) : Math.abs(Math.sin(k*xM)));
+                    i===0 ? ctx.moveTo(xPx,env) : ctx.lineTo(xPx,env);
+                }
+                ctx.stroke();
+                ctx.beginPath();
+                for (let i=0;i<=STEPS;i++) {
+                    const frac=i/STEPS, xPx=PAD_X+frac*STRING_L, xM=frac*L_METRES;
+                    const env = STRING_Y + effA*(bc==='open-open' ? Math.abs(Math.cos(k*xM)) : Math.abs(Math.sin(k*xM)));
+                    i===0 ? ctx.moveTo(xPx,env) : ctx.lineTo(xPx,env);
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // string glow + body
+            ctx.save();
+            if (proximity > 0.3) {
+                ctx.shadowColor=`rgba(251,191,36,${0.5*proximity})`;
+                ctx.shadowBlur=8+10*proximity;
+            }
+            ctx.lineJoin='round'; ctx.lineCap='round';
+            ctx.beginPath(); ctx.lineWidth=thickBase+2; ctx.strokeStyle='#1a2035';
+            ctx.moveTo(pts[0].x,pts[0].y);
+            for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y);
+            ctx.stroke();
+
+            const sc = proximity > 0.5
+                ? `rgb(${Math.round(251*proximity+147*(1-proximity))},${Math.round(191*proximity+197*(1-proximity))},${Math.round(36*proximity+253*(1-proximity))})`
+                : '#93c5fd';
+            ctx.beginPath(); ctx.lineWidth=thickBase; ctx.strokeStyle=sc;
+            ctx.moveTo(pts[0].x,pts[0].y);
+            for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x,pts[i].y);
+            ctx.stroke();
+            ctx.restore();
+
+            // nodes + antinodes
+            if (proximity>0.2 && harmonic) {
+                const nh = harmonic.n;
+
+                // ── compute node and antinode fractional positions ──────────────
+                let nodePos=[], antinodePos=[];
+                if (bc==='fixed-fixed') {
+                    // nodes at m/n (m=0..n), antinodes at (m+0.5)/n (m=0..n-1)
+                    for (let m=0;m<=nh;m++)   nodePos.push(m/nh);
+                    for (let m=0;m<nh;m++)    antinodePos.push((m+0.5)/nh);
+                } else if (bc==='open-open') {
+                    // antinodes at m/n (m=0..n), nodes at (m+0.5)/n (m=0..n-1)
+                    for (let m=0;m<=nh;m++)   antinodePos.push(m/nh);
+                    for (let m=0;m<nh;m++)    nodePos.push((m+0.5)/nh);
+                } else {
+                    // fixed-open, nh is odd: nodes at 2m/nh (m=0..floor(nh/2))
+                    //                        antinodes at (2m+1)/nh (m=0..floor((nh-1)/2))
+                    const numN = Math.floor((nh+1)/2);
+                    for (let m=0;m<numN;m++) nodePos.push(2*m/nh);
+                    for (let m=0;m<numN;m++) antinodePos.push((2*m+1)/nh);
+                }
+
+                // ── draw nodes (red dots) ──────────────────────────────────────
+                if (s.showNodes) {
+                    nodePos.forEach(frac=>{
+                        const nx=PAD_X+frac*STRING_L;
+                        ctx.beginPath(); ctx.arc(nx,STRING_Y,5,0,2*Math.PI);
+                        ctx.fillStyle=`rgba(239,68,68,${0.8*proximity})`; ctx.fill();
+                        ctx.strokeStyle=`rgba(255,150,150,${0.6*proximity})`; ctx.lineWidth=1.2; ctx.stroke();
+                    });
+                }
+
+                // ── draw antinodes (green X marks) ─────────────────────────────
+                if (s.showAntinodes) {
+                    const r=7, alpha=0.85*proximity;
+                    antinodePos.forEach(frac=>{
+                        const nx=PAD_X+frac*STRING_L;
+                        ctx.save();
+                        ctx.strokeStyle=`rgba(74,222,128,${alpha})`;
+                        ctx.lineWidth=2; ctx.lineCap='round';
+                        ctx.beginPath(); ctx.moveTo(nx-r,STRING_Y-r); ctx.lineTo(nx+r,STRING_Y+r); ctx.stroke();
+                        ctx.beginPath(); ctx.moveTo(nx+r,STRING_Y-r); ctx.lineTo(nx-r,STRING_Y+r); ctx.stroke();
+                        ctx.restore();
+                    });
+                }
+            }
+
+            // walls / open ends
+            function drawFixedWall(x) {
+                ctx.fillStyle='#374151';
+                ctx.fillRect(x-10,STRING_Y-40,10,80);
+                ctx.strokeStyle='#4b5563'; ctx.lineWidth=0.8;
+                ctx.strokeRect(x-10,STRING_Y-40,10,80);
+                for (let hy=STRING_Y-36;hy<STRING_Y+40;hy+=8) {
+                    ctx.beginPath(); ctx.strokeStyle='#4b5563'; ctx.lineWidth=0.8;
+                    ctx.moveTo(x-10,hy); ctx.lineTo(x-16,hy+5); ctx.stroke();
+                }
+            }
+            function drawOpenEnd(x) {
+                ctx.beginPath(); ctx.arc(x,STRING_Y,7,0,2*Math.PI);
+                ctx.strokeStyle='#6b7280'; ctx.lineWidth=1.5; ctx.stroke();
+                ctx.fillStyle='#1c2030'; ctx.fill();
+                ctx.save();
+                ctx.strokeStyle='rgba(107,114,128,0.35)'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+                ctx.beginPath(); ctx.moveTo(x,STRING_Y-50); ctx.lineTo(x,STRING_Y+50); ctx.stroke();
+                ctx.restore();
+            }
+
+            if (bc==='open-open') drawOpenEnd(PAD_X); else drawFixedWall(PAD_X);
+            if (bc==='fixed-open'||bc==='open-open') drawOpenEnd(PAD_X+STRING_L);
+            else drawFixedWall(PAD_X+STRING_L+10);
+
+            // annotations
+            function mono(txt,x,y,color='#9ca3af'){
+                ctx.font='11px "Space Mono",monospace'; ctx.fillStyle=color; ctx.fillText(txt,x,y);
+            }
+            mono(`v = ${v.toFixed(2)} m/s`, 8, 18, '#d1d5db');
+            mono(`f = ${f.toFixed(1)} Hz`,  8, 33, '#93c5fd');
+            mono(`λ = ${(v/f).toFixed(2)} m`, 8, 48, '#9ca3af');
+            mono(`t = ${t.toFixed(2)} s`, CW-82, 18, '#6b7280');
+            if (harmonic && proximity>0.1) {
+                const lbl=bc==='fixed-open'?`n=${harmonic.n} (mode ${Math.ceil(harmonic.n/2)})`:`n=${harmonic.n}`;
+                mono(`≈ ${lbl}  f₀=${harmonic.f.toFixed(1)} Hz`, CW-210, CH-10,
+                    proximity>0.6?'#fbbf24':'#6b7280');
+            }
+        }
+
+        // ── animation ─────────────────────────────────────────────────────────
+        const animate = useCallback((ts)=>{
+            const s=stateRef.current;
+            if (!s.isPlaying) return;
+            if (s.lastTimestamp===null) s.lastTimestamp=ts;
+            const rawDt = Math.min((ts-s.lastTimestamp)/1000, 0.05);
+            s.lastTimestamp=ts;
+            s.t += rawDt * s.timeScale;   // <-- speed multiplier applied here
+            const ctx=canvasRef.current?.getContext('2d');
+            if (ctx) draw(ctx,s.t);
+            rafRef.current=requestAnimationFrame(animate);
+        },[]);
+
+        const drawStatic=useCallback(()=>{
+            const ctx=canvasRef.current?.getContext('2d');
+            if (ctx) draw(ctx,stateRef.current.t);
+        },[]);
+
+        useEffect(()=>{
+            if (isPlaying){
+                stateRef.current.lastTimestamp=null;
+                rafRef.current=requestAnimationFrame(animate);
+            } else {
+                if (rafRef.current) cancelAnimationFrame(rafRef.current);
+                drawStatic();
+            }
+            return ()=>{ if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+        },[isPlaying,animate]);
+
+        useEffect(()=>{ if(!isPlaying) drawStatic(); },
+            [tension,linDensity,frequency,amplitude,boundary,showNodes,showEnvelope,showAntinodes]);
+
+        useEffect(()=>{ drawStatic(); },[]);
+
+        const handleReset=()=>{
+            setIsPlaying(false);
+            stateRef.current.t=0; stateRef.current.lastTimestamp=null;
+            setTimeout(drawStatic,30);
+        };
+
+        // derived values for controls
+        const v = getWaveSpeed(tension, linDensity);
+        const resonantFreqs = getResonantFreqs(tension, linDensity, boundary, 6);
+        const { proximity, harmonic, delta } = resonanceProximity(frequency, resonantFreqs);
+        const resonanceColor = proximity>0.8?'#4ade80':proximity>0.4?'#fbbf24':'#ef4444';
+        const resonancePct   = Math.round(proximity*100);
+
+        const LEFT_COL_W  = 160;
+        const RIGHT_COL_W = 270;
+
+        return (
+            <div style={{minHeight:'100vh',background:'#0f1117',padding:'24px 16px 36px'}}>
+
+                {/* header */}
+                <div style={{textAlign:'center',marginBottom:20}}>
+                    <h1 style={{fontFamily:"'DM Sans',sans-serif",fontSize:22,fontWeight:600,
+                                color:'#f3f4f6',letterSpacing:'0.01em',margin:0}}>
+                        Standing Waves on a String
+                    </h1>
+                    <p style={{fontSize:13,color:'#6b7280',marginTop:5}}>
+                        PHYS 1151 · Waves
+                    </p>
+                </div>
+
+                {/* ── outer wrapper: centres the whole block ── */}
+                <div style={{display:'flex',justifyContent:'center'}}>
+                    <div style={{display:'flex',flexDirection:'column',gap:12}}>
+
+                        {/* ── top row: left col | canvas+resonance | right col ── */}
+                        {/* alignItems:stretch so all three children share the same height */}
+                        <div style={{display:'flex',gap:14,alignItems:'stretch'}}>
+
+                            {/* LEFT COLUMN — flex column, last card grows to fill */}
+                            <div style={{display:'flex',flexDirection:'column',gap:12,width:LEFT_COL_W,flexShrink:0}}>
+
+                                {/* play / reset */}
+                                <div className="card" style={{display:'flex',flexDirection:'column',gap:8}}>
+                                    <button className={`btn ${isPlaying?'btn-active':'btn-primary'}`}
+                                            style={{justifyContent:'center'}}
+                                            onClick={()=>setIsPlaying(p=>!p)}>
+                                        {isPlaying?<Pause/>:<Play/>}{isPlaying?'Pause':'Play'}
+                                    </button>
+                                    <button className="btn btn-secondary"
+                                            style={{justifyContent:'center'}}
+                                            onClick={handleReset}>
+                                        <ResetIcon/> Reset
+                                    </button>
+                                </div>
+
+                                {/* animation speed */}
+                                <div className="card">
+                                    <Slider label="Speed"
+                                        value={timeScale}
+                                        display={`${timeScale.toFixed(2)}×`}
+                                        min={0.05} max={1.0} step={0.05}
+                                        onChange={setTimeScale}/>
+                                </div>
+
+                                {/* boundary conditions */}
+                                <div className="card" style={{display:'flex',flexDirection:'column',gap:6}}>
+                                    <div className="panel-label" style={{marginBottom:2}}>Boundary Conditions</div>
+                                    {[
+                                        ['fixed-fixed','Fixed – Fixed'],
+                                        ['fixed-open', 'Fixed – Open'],
+                                        ['open-open',  'Open – Open'],
+                                    ].map(([val,lbl])=>(
+                                        <button key={val}
+                                            className={`btn-mode ${boundary===val?'btn-mode-active':''}`}
+                                            onClick={()=>setBoundary(val)}>
+                                            {lbl}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                {/* display toggles — flex:1 makes it grow to match total height */}
+                                <div className="card" style={{display:'flex',flexDirection:'column',gap:10,flex:1}}>
+                                    <div className="panel-label" style={{marginBottom:-2}}>Display</div>
+                                    <Toggle value={showNodes}      onChange={setShowNodes}      label="Nodes"/>
+                                    <Toggle value={showAntinodes}  onChange={setShowAntinodes}  label="Anti-nodes (×)"/>
+                                    <Toggle value={showEnvelope}   onChange={setShowEnvelope}   label="Envelope"/>
+                                </div>
+
+                            </div>{/* end left col */}
+
+                            {/* CANVAS + RESONANCE BAR stacked as one column */}
+                            <div style={{display:'flex',flexDirection:'column',gap:12,alignItems:'stretch'}}>
+
+                                {/* canvas + caption */}
+                                <div style={{display:'flex',flexDirection:'column'}}>
+                                    <canvas ref={canvasRef} width={CW} height={CH}
+                                        style={{borderRadius:'8px 8px 0 0',background:'#141820',display:'block'}}/>
+                                    <div style={{
+                                        width:CW, background:'#141820',
+                                        borderRadius:'0 0 8px 8px',
+                                        padding:'4px 10px 6px',
+                                        borderTop:'1px solid #1e2533',
+                                    }}>
+                                        <span className="sub-label">
+                                            {boundary==='fixed-fixed'?'fixed–fixed · nodes at both ends'
+                                            :boundary==='open-open'  ?'open–open · antinodes at both ends'
+                                            :                         'fixed–open · node at left, antinode at right'}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* resonance bar — sits directly under canvas, same width, flex:1 fills remainder */}
+                                <div className="card" style={{flex:1,display:'flex',gap:28,alignItems:'flex-start'}}>
+
+                                    {/* frequency slider */}
+                                    <div style={{flex:'0 0 200px'}}>
+                                        <Slider label="Driving Frequency f"
+                                            value={frequency} display={`${frequency.toFixed(1)} Hz`}
+                                            min={0.5} max={60} step={0.5}
+                                            onChange={setFrequency}/>
+                                    </div>
+
+                                    {/* resonance meter */}
+                                    <div style={{flex:'0 0 180px'}}>
+                                        <div style={{display:'flex',justifyContent:'space-between',marginBottom:6}}>
+                                            <span className="ctrl-label">Resonance match</span>
+                                            <span style={{fontFamily:'Space Mono',fontSize:12,color:resonanceColor}}>
+                                                {resonancePct}%
+                                            </span>
+                                        </div>
+                                        <div className="resonance-bar-bg">
+                                            <div className="resonance-bar-fill"
+                                                style={{width:`${resonancePct}%`,background:resonanceColor}}/>
+                                        </div>
+                                        {harmonic && (
+                                            <div style={{marginTop:5}}>
+                                                <span className="sub-label">
+                                                    nearest: f{harmonic.n} = {harmonic.f.toFixed(2)} Hz
+                                                    {delta ? ` (${delta>0?'+':''}${delta.toFixed(1)} Hz)` : ''}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* harmonic chips */}
+                                    <div style={{flex:1,minWidth:0}}>
+                                        <div className="panel-label" style={{marginBottom:6}}>Resonant frequencies</div>
+                                        <div style={{display:'flex',flexWrap:'wrap',gap:5}}>
+                                            {resonantFreqs.slice(0,6).map(r=>{
+                                                const isNearest = harmonic && r.n===harmonic.n;
+                                                return (
+                                                    <button key={r.n}
+                                                        onClick={()=>setFrequency(parseFloat(r.f.toFixed(1)))}
+                                                        style={{
+                                                            fontFamily:'Space Mono',fontSize:10,
+                                                            padding:'4px 9px',borderRadius:3,border:'none',
+                                                            cursor:'pointer',transition:'all 0.15s',
+                                                            background:isNearest?'#1d3a6b':'#1e2533',
+                                                            color:isNearest?'#93c5fd':'#6b7280',
+                                                            outline:isNearest?'1px solid #3b82f6':'none',
+                                                        }}>
+                                                        n={r.n} · {r.f.toFixed(1)} Hz
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                        <div style={{marginTop:5}}>
+                                            <span className="sub-label">↑ click to snap to harmonic</span>
+                                        </div>
+                                    </div>
+
+                                </div>{/* end resonance card */}
+                            </div>{/* end canvas column */}
+
+                            {/* RIGHT COLUMN — flex column, key relations grows to fill */}
+                            <div style={{display:'flex',flexDirection:'column',gap:12,width:RIGHT_COL_W,flexShrink:0}}>
+
+                                {/* string properties — flex:7 for 70% of right column height */}
+                                <div className="card" style={{display:'flex',flexDirection:'column',gap:20,paddingTop:18,paddingBottom:20,flex:7}}>
+                                    <div className="panel-label" style={{marginBottom:-6}}>String Properties</div>
+
+                                    <Slider label="Tension T"
+                                        value={tension} display={`${tension.toFixed(1)} N`}
+                                        min={1} max={40} step={0.5}
+                                        onChange={setTension}
+                                        sub={`v = √(T/μ) = ${v.toFixed(2)} m/s`}/>
+
+                                    <Slider label="Linear density μ"
+                                        value={linDensity} display={`${(linDensity*1000).toFixed(1)} g/m`}
+                                        min={0.001} max={0.05} step={0.001}
+                                        onChange={setLinDensity}/>
+
+                                    <Slider label="Amplitude"
+                                        value={amplitude} display={`${(amplitude/20).toFixed(1)} cm`}
+                                        min={10} max={80} step={5}
+                                        onChange={setAmplitude}/>
+                                </div>
+
+                                {/* key relations — flex:3 for 30% of right column height */}
+                                <div className="card" style={{borderLeft:'3px solid #1d4ed8',flex:3}}>
+                                    <div className="panel-label" style={{marginBottom:8}}>Key Relations</div>
+                                    <p style={{fontSize:12,color:'#d1d5db',lineHeight:1.9,margin:0,
+                                               fontFamily:'Space Mono',letterSpacing:'0.02em'}}>
+                                        v = √(T / μ)<br/>
+                                        <span style={{color:'#9ca3af'}}>
+                                            {boundary==='fixed-open'?'fₙ = n·v / (4L)  n odd':'fₙ = n·v / (2L)'}
+                                        </span><br/>
+                                        λ = v / f
+                                    </p>
+                                </div>
+
+                            </div>{/* end right col */}
+                        </div>{/* end top row */}
+
+                    </div>{/* end outer column */}
+                </div>{/* end centering wrapper */}
+
+                <div style={{textAlign:'center',marginTop:24,fontSize:11,
+                             color:'#374151',fontFamily:"'Space Mono',monospace"}}>
+                    PHYS 1151 · Interactive Physics Simulations · Northeastern University
+                </div>
+            </div>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<StandingWaves/>);
+</script>
+</body>
+</html>
